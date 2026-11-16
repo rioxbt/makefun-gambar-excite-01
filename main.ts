@@ -202,7 +202,27 @@ for (let i = 0; i < 95; i++) {
 }
 
 // ---------------------------------------------------------------------------
-// 2. the creature, filling the top of the frame and cut off by it
+// 2. the shaft of light it drags down out of the bell: the axis of the picture
+// ---------------------------------------------------------------------------
+
+// three defined cones of light falling from the bell to the surface: the axis of
+// the picture, drawn with hard edges like every other shape here
+const CONES = [
+  [-268, -150, 44, 60, 0.055],
+  [16, 78, -10, 104, 0.085],
+  [252, 148, 96, 68, 0.05],
+];
+for (const c of CONES) {
+  for (let y = 214; y < HORIZON; y += 3) {
+    const t = (y - 214) / (HORIZON - 214);
+    const cx = 512 + c[0] + (c[2] - c[0]) * t;
+    const hw = c[1] + (c[3] - c[1]) * t;
+    solidSegment(cx - hw, y, cx + hw, y, 1.4, CYAN[0], CYAN[1], CYAN[2], c[4]);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 3. the creature, filling the top of the frame and cut off by it
 // ---------------------------------------------------------------------------
 
 const CX = 512;
@@ -476,6 +496,17 @@ for (let k = 1; k < 6; k++) {
     }
     prev = [x, y];
   }
+}
+// where the light lands: a flat pool of it on the water under the creature
+for (let y = HORIZON + 2; y < HORIZON + 92; y += 4) {
+  const u = (y - (HORIZON + 2)) / 90;
+  const hw = 302 * Math.sqrt(Math.max(0, 1 - u * u));
+  solidSegment(CX - hw, y, CX + hw, y, 2.2, CYAN[0], CYAN[1], CYAN[2], 0.11);
+}
+for (let y = HORIZON + 4; y < HORIZON + 70; y += 4) {
+  const u = (y - (HORIZON + 4)) / 66;
+  const hw = 168 * Math.sqrt(Math.max(0, 1 - u * u));
+  solidSegment(CX - hw, y, CX + hw, y, 2.2, ICE[0], ICE[1], ICE[2], 0.09);
 }
 // the dark hole where it tore through, ringed with foam and spray
 for (let i = 0; i < 2; i++) {
