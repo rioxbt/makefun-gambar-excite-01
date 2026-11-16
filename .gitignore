@@ -1,0 +1,7 @@
+# local runs of the entry point, and anything that must never be committed
+out/
+out2/
+out3/
+*.tgz
+wallet.json
+.env
